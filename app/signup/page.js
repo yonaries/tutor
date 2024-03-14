@@ -3,6 +3,7 @@ import { Box, Button, Container, Divider, Stack, TextField, Typography, styled }
 import { Icon } from '@iconify/react';
 import Image from "next/image";
 import { useState } from "react";
+import { VisuallyHiddenInput } from "@/app/become-tutor/page";
 
 const SimonButton = styled(Button)(({ theme }) => ({
     boxShadow: 'none',
@@ -46,16 +47,22 @@ function Login() {
                     <SimonText placeholder="First Name" variant="outlined" fullWidth value={name} onChange={(e) => setName(e.target.value)} required />
                     <SimonText placeholder="Email" variant="outlined" type="email" fullWidth value={email} onChange={(e) => setEmail(e.target.value)} required />
                     <SimonText placeholder="Password" variant="outlined" type="password" fullWidth value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <Button
+                        component="label"
+                        role={undefined}
+                        variant="outlined"
+                        tabIndex={-1}
+                        startIcon={<Icon icon="icon-park-outline:upload-picture" />}
+                        sx={{
+                            color: '#555'
+                        }}
+                        disableElevation
+                    >
+                        Upload Profile Picture
+                        <VisuallyHiddenInput type="file" />
+                    </Button>
                     <SimonButton type="submit" variant="contained" fullWidth onClick={handleSubmit}>Sign In</SimonButton>
 
-                    <Divider>or continue with</Divider>
-                    <SimonButton2
-                        variant="contained"
-                        color="secondary"
-                        fullWidth
-                        startIcon={<Icon icon="flat-color-icons:google" />}
-                        onClick={handleSignInWithGoogle}
-                    >Sign in with Google</SimonButton2>
                 </Stack>
             </Container>
         </>

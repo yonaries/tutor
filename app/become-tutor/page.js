@@ -1,5 +1,5 @@
 'use client';
-import { Box, Button, Container, Divider, Stack, TextField, Typography, styled } from "@mui/material"
+import { Box, Button, Container, Divider, Grid, Stack, TextField, Typography, styled } from "@mui/material"
 import { Icon } from '@iconify/react';
 import Image from "next/image";
 import { useState } from "react";
@@ -23,7 +23,7 @@ const SimonText = styled(TextField)(({ theme }) => ({
     borderRadius: 8,
     border: '1px solid ' + theme.palette.secondary.main
 }));
-const VisuallyHiddenInput = styled('input')({
+export const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
     height: 1,
@@ -51,10 +51,14 @@ function Login() {
     return (
         <>
             <Container maxWidth="md" sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-                <Stack justifyContent="center" alignItems="center" spacing={2} sx={{ width: 400 }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
 
-                    <Typography variant="h5">Become a tutor</Typography>
-                    {/* Full Name
+
+                        <Stack justifyContent="center" alignItems="center" spacing={2} sx={{ width: 400 }}>
+
+                            <Typography variant="h5">Become a tutor</Typography>
+                            {/* Full Name
                     Profession
                     Higher Education
                     Location
@@ -65,30 +69,39 @@ function Login() {
                     Rate per hour (ETB)
                     Register */}
 
-                    <SimonText placeholder="Full Name" variant="outlined" fullWidth required value={name} onChange={(e) => setName(e.target.value)} />
-                    <SimonText placeholder="Profession" variant="outlined" fullWidth required value={profession} onChange={(e) => setProfession(e.target.value)} />
-                    <SimonText placeholder="Higher Education" variant="outlined" fullWidth required value={higherEducation} onChange={(e) => setHigherEducation(e.target.value)} />
-                    <SimonText placeholder="Location" variant="outlined" fullWidth required value={location} onChange={(e) => setLocation(e.target.value)} />
-                    <SimonText placeholder="Availability" variant="outlined" fullWidth required value={availability} onChange={(e) => setAvailability(e.target.value)} />
-                    <SimonText placeholder="Teaching Method" variant="outlined" fullWidth required value={teachingMethod} onChange={(e) => setTeachingMethod(e.target.value)} />
-                    <SimonText placeholder="Courses" variant="outlined" fullWidth required value={courses} onChange={(e) => setCourses(e.target.value)} />
-                    <SimonText placeholder="Rate per hour (ETB)" variant="outlined" fullWidth required value={ratePerHour} onChange={(e) => setRatePerHour(e.target.value)} />
+                            <SimonText placeholder="Full Name" variant="outlined" fullWidth required value={name} onChange={(e) => setName(e.target.value)} />
+                            <SimonText placeholder="Profession" variant="outlined" fullWidth required value={profession} onChange={(e) => setProfession(e.target.value)} />
+                            <SimonText placeholder="Higher Education" variant="outlined" fullWidth required value={higherEducation} onChange={(e) => setHigherEducation(e.target.value)} />
+                            <SimonText placeholder="Location" variant="outlined" fullWidth required value={location} onChange={(e) => setLocation(e.target.value)} />
+                            <SimonText placeholder="Availability" variant="outlined" fullWidth required value={availability} onChange={(e) => setAvailability(e.target.value)} />
+                            <SimonText placeholder="Teaching Method" variant="outlined" fullWidth required value={teachingMethod} onChange={(e) => setTeachingMethod(e.target.value)} />
+                            <SimonText placeholder="Courses" variant="outlined" fullWidth required value={courses} onChange={(e) => setCourses(e.target.value)} />
+                            <SimonText placeholder="Rate per hour (ETB)" variant="outlined" fullWidth required value={ratePerHour} onChange={(e) => setRatePerHour(e.target.value)} />
 
 
-                    <Button
-                        component="label"
-                        role={undefined}
-                        variant="contained"
-                        tabIndex={-1}
-                        startIcon={<Icon icon="icon-park-outline:upload-picture" />}
-                    >
-                        Upload Profile Picture
-                        <VisuallyHiddenInput type="file" />
-                    </Button>
-                    <SimonButton type="submit" variant="contained" fullWidth onClick={handleSubmit}
-                        InputLabelProps={{ shrink: true }}
-                    >Register</SimonButton>
-                </Stack>
+                            <Button
+                                component="label"
+                                role={undefined}
+                                variant="outlined"
+                                tabIndex={-1}
+                                startIcon={<Icon icon="icon-park-outline:upload-picture" />}
+                                sx={{
+                                    color: '#555'
+                                }}
+                                disableElevation
+                            >
+                                Upload Profile Picture
+                                <VisuallyHiddenInput type="file" />
+                            </Button>
+                            <SimonButton type="submit" variant="contained" fullWidth onClick={handleSubmit}
+                                InputLabelProps={{ shrink: true }}
+                            >Register</SimonButton>
+                        </Stack>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Image width={736 - 200} height={1001 - 200} src="/become.png" alt="become" />
+                    </Grid>
+                </Grid>
             </Container>
         </>
     )
