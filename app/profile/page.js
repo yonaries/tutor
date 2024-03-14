@@ -1,4 +1,5 @@
 'use client';
+import { VisuallyHiddenInput } from "@/app/become-tutor/page";
 import { SimonDarkButton } from "@/app/find/page";
 import Nav from "@/components/Nav";
 import { Icon } from "@iconify/react"
@@ -131,6 +132,19 @@ function Page() {
                                     </Box>
                                 </Grid>
                             ))}
+
+                            <Grid item xs={12} md={6}>
+                                <Box sx={{ overflow: 'hidden', height: '100%' }}>
+                                    <Button variant="outlined" sx={{ width: '100%', height: "100%", color: 'black' }} startIcon={<Icon icon="ph:certificate-duotone" />}
+                                        component="label"
+                                        role={undefined}
+                                        tabIndex={-1}
+                                    >
+                                        Add Certificate
+                                        <VisuallyHiddenInput type="file" />
+                                    </Button>
+                                </Box>
+                            </Grid>
                         </Grid>
                     </Stack>
                 </Grid>
