@@ -3,7 +3,7 @@ import { VisuallyHiddenInput } from "@/app/become-tutor/page";
 import { SimonDarkButton } from "@/app/find/page";
 import Nav from "@/components/Nav";
 import { Icon } from "@iconify/react"
-import { Avatar, Badge, Box, Button, Card, CardContent, CardHeader, Container, Grid, IconButton, Rating, Stack, Typography, alpha, styled } from "@mui/material"
+import { Avatar, Badge, Box, Button, Card, CardContent, CardHeader, Container, Grid, IconButton, Rating, Stack, TextField, Typography, alpha, styled } from "@mui/material"
 import Image from "next/image";
 import { useState } from "react";
 const reviews = [
@@ -108,11 +108,13 @@ function Page() {
                             </Stack>} />
                             <CardContent>
                                 <Typography variant="body2">Hey, how was your tutor session Drop some Rating!</Typography>
-                                <Stack sx={{ py: 5 }} alignItems="center" spacing={3}>
+                                <Stack sx={{ py: 5, width: '100%' }} alignItems="center" spacing={3}>
                                     <Rating name="read-only" value={ratingValue}
                                         onChange={(event, newValue) => {
                                             setRatingValue(newValue);
                                         }} size="large" />
+                                    <TextField placeholder="Do you want to say anything more..." sx={{ width: "90%", background: '#eee' }} multiline
+                                        maxRows={4} minRows={4} />
                                     <Button sx={{ textTransform: 'none', color: 'black' }} variant="outlined">Submit</Button>
                                 </Stack>
 
