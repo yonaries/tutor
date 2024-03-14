@@ -23,6 +23,17 @@ const SimonText = styled(TextField)(({ theme }) => ({
     borderRadius: 8,
     border: '1px solid ' + theme.palette.secondary.main
 }));
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 function Login() {
     const [name, setName] = useState('');
     const [profession, setProfession] = useState('');
@@ -62,7 +73,21 @@ function Login() {
                     <SimonText placeholder="Teaching Method" variant="outlined" fullWidth required value={teachingMethod} onChange={(e) => setTeachingMethod(e.target.value)} />
                     <SimonText placeholder="Courses" variant="outlined" fullWidth required value={courses} onChange={(e) => setCourses(e.target.value)} />
                     <SimonText placeholder="Rate per hour (ETB)" variant="outlined" fullWidth required value={ratePerHour} onChange={(e) => setRatePerHour(e.target.value)} />
-                    <SimonButton type="submit" variant="contained" fullWidth onClick={handleSubmit}>Register</SimonButton>
+
+
+                    <Button
+                        component="label"
+                        role={undefined}
+                        variant="contained"
+                        tabIndex={-1}
+                        startIcon={<Icon icon="icon-park-outline:upload-picture" />}
+                    >
+                        Upload Profile Picture
+                        <VisuallyHiddenInput type="file" />
+                    </Button>
+                    <SimonButton type="submit" variant="contained" fullWidth onClick={handleSubmit}
+                        InputLabelProps={{ shrink: true }}
+                    >Register</SimonButton>
                 </Stack>
             </Container>
         </>

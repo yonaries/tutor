@@ -1,7 +1,7 @@
 'use client';
 import Image from "next/image";
 import styles from "./../page.module.css";
-import { Box, Button, Card, CardContent, CardHeader, Checkbox, Container, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, Radio, RadioGroup, Stack, Typography, styled } from "@mui/material";
+import { Box, Button, Card, CardContent, CardHeader, Checkbox, Container, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, InputAdornment, Radio, RadioGroup, Stack, TextField, Typography, styled } from "@mui/material";
 import { Icon } from "@iconify/react";
 import Nav from "@/components/Nav";
 
@@ -19,6 +19,52 @@ export default function Home() {
                 <Nav />
 
                 <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <Stack justifyContent="center" alignItems="center" sx={{ pt: 10,pb:3 }} spacing={5}>
+                            <Image width={967} height={172} src="/Frame.png" alt="find" />
+                            <Stack direction="row" sx={{ width: '100%' }}>
+
+                                <TextField
+                                    fullWidth
+                                    sx={{
+                                        background: 'white',
+                                        borderTopLeftRadius: 30,
+                                        borderBottomLeftRadius: 30,
+                                        borderTopRightRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        border: 'none',
+                                        py: 2,
+                                        px: 1
+                                    }}
+                                    variant="standard"
+                                    placeholder="What subject tutor are you looking for ?"
+
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Icon icon="ic:baseline-search" fontSize={22} />
+                                            </InputAdornment>
+                                        ),
+                                        disableUnderline: true,
+                                    }}
+                                />
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        textTransform: 'none',
+                                        borderTopRightRadius: 30,
+                                        borderBottomRightRadius: 30,
+                                        borderTopLeftRadius: 0,
+                                        borderBottomLeftRadius: 0,
+                                        width: 150
+                                    }}
+                                    disableElevation
+                                >
+                                    Find Tutor
+                                </Button>
+                            </Stack>
+                        </Stack>
+                    </Grid>
                     <Grid item xs={12} md={3} >
                         <Card elevation={0} sx={{ mt: 9 }}>
                             <CardContent>
