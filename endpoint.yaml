@@ -1,0 +1,304 @@
+openapi: 3.0.0
+info:
+  title: API Documentation
+  description: API for managing assessments, ratings, courses, students, and tutors
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api
+
+# Student Endpoints
+paths:
+  /api/student:
+    get:
+      summary: Get all students
+      description: Returns a list of all students.
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+    post:
+      summary: Create a new student
+      description: Creates a new student with the provided data.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StudentCreateRequest'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+    /id:
+      put:
+        summary: Update a student
+        description: Updates the details of a student with the provided ID.
+        parameters:
+          - in: path
+            name: id
+            description: ID of the student
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                $ref: '#/components/schemas/StudentUpdateRequest'
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                      example: true
+                    message:
+                      type: string
+                      example: Student successfully updated
+      delete:
+        summary: Delete a student
+        description: Deletes a student with the provided ID.
+        parameters:
+          - in: path
+            name: id
+            description: ID of the student
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                      example: true
+                    message:
+                      type: string
+                      example: Student successfully deleted
+    /login:
+      get:
+        summary: Get student by email
+        description: Retrieves a student by their email.
+        parameters:
+          - in: query
+            name: email
+            description: Email of the student
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Student'
+    /recovery:
+      get:
+        summary: Get password question and answer
+        description: Retrieves the password question and answer for a student with the provided email.
+        parameters:
+          - in: query
+            name: email
+            description: Email of the student
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Successful operation
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    success:
+                      type: boolean
+                      example: true
+                    password_question:
+                      type: string
+                      example: What is your favorite color?
+                    password_answer:
+                      type: string
+                      example: Blue
+      put:
+        summary: Update password
+        description: Updates the password for a student with the provided email.
+        parameters:
+          - in: query
+            name: email
+            description: Email of the student
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  password:
+                    type: string
+                    description: New password
+                    required: true
+
+# Tutor Endpoints
+/tutor:
+  get:
+    summary: Retrieve all tutors
+    responses:
+      '200':
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Tutor'
+# Course Endpoints
+/api/course:
+  get:
+    summary: Get all courses
+    responses:
+      '200':
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseList'
+      '500':
+        description: Internal server error
+
+# Assessment Endpoints
+/assessment:
+  get:
+    summary: Get assessment test by name
+    parameters:
+      - name: name
+        in: query
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssessmentTest'
+      '500':
+        description: Internal server error
+  /id:
+    put:
+      summary: Update assessment result by tutor ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            description: ID of the tutor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAssessmentResult'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        '500':
+          description: Internal server error
+        '404':
+          description: Tutor not found
+    get:
+      summary: Get assessment results by tutor ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            description: ID of the tutor
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        course:
+                          type: string
+                        grade:
+                          type: string
+        '500':
+          description: Internal server error
+
+# Rating Endpoints
+/api/rating/{tutor_id}/{student_id}:
+  put:
+    summary: Calculate and update rating
+    parameters:
+      - name: tutor_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: ID of the tutor
+      - name: student_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        description: ID of the student
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RatingInput'
+    responses:
+      '200':
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                message:
+                  type: string
+      '500':
+        description: Internal server error
