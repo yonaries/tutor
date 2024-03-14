@@ -2,8 +2,9 @@
 import { SimonDarkButton } from "@/app/find/page";
 import Nav from "@/components/Nav";
 import { Icon } from "@iconify/react"
-import { Avatar, Badge, Box, Card, CardContent, Container, Grid, Stack, Typography, alpha, styled } from "@mui/material"
+import { Avatar, Badge, Box, Button, Card, CardContent, CardHeader, Container, Grid, IconButton, Rating, Stack, Typography, alpha, styled } from "@mui/material"
 import Image from "next/image";
+import { useState } from "react";
 const reviews = [
     {
         text: "This teacher's enthusiasm for their subject shines through in every lesson, making learning engaging and enjoyable for all students. They foster a supportive and inclusive classroom environment where everyone feels valued and encouraged to participate actively.",
@@ -40,51 +41,84 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
     height: 42,
 }));
 function Page() {
+    const [ratingValue, setRatingValue] = useState(3);
+    const [rating, setRating] = useState(3);
     return (
         <Container maxWidth="lg" sx={{ mt: 3 }}>
             <Nav />
             <Grid container spacing={3} sx={{ pt: 3 }}>
                 <Grid item spacing={1} xs={12} sm={4}>
-                    <Card sx={{ borderRadius: 6, pb: 1, pt: 5 }} elevation={0}>
-                        <CardContent>
-                            <Stack justifyContent="center" alignItems="center" >
-                                <Badge
-                                    overlap="circular"
-                                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                                    badgeContent={
-                                        <SmallAvatar alt="Remy Sharp" src="/med2.png" />
-                                    }
+                    <Stack spacing={3}>
 
-                                    width={100}
-                                >
-                                    <Avatar alt="Travis Howard" src="/avatar.png" sx={{
-                                        width: 100,
-                                        height: 100
-                                    }} />
-                                </Badge>
-                                <Typography variant="h6">Abebe Bikila</Typography>
-                                <Typography variant="body2" sx={{ color: '#A05E45' }}>Teacher • Master&apos;s Degree </Typography>
-                                <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>Certified Math and Physics Tutor with a Master&apos;s degree. 5+ years experience. Specializing in SAT prep. Let&apos;s reach your goals together!</Typography>
+                        <Card sx={{ borderRadius: 6, pb: 1, pt: 5 }} elevation={0}>
+                            <CardContent>
+                                <Stack justifyContent="center" alignItems="center" >
+                                    <Badge
+                                        overlap="circular"
+                                        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                                        badgeContent={
+                                            <SmallAvatar alt="Remy Sharp" src="/med2.png" />
+                                        }
 
-                                <Box sx={{ background: alpha('#F0F0F0', 0.5), borderRadius: 5, width: '100%', mt: 10, py: 2, px: 2, textAlign: 'center' }}>
-                                    <Stack direction="row" justifyContent="space-between">
-                                        <Stack>
-                                            <Typography variant="caption">Worked</Typography>
-                                            <Typography variant="h5" sx={{ color: '#FF9D01' }}>587hr+</Typography>
+                                        width={100}
+                                    >
+                                        <Avatar alt="Travis Howard" src="/avatar.png" sx={{
+                                            width: 100,
+                                            height: 100
+                                        }} />
+                                    </Badge>
+                                    <Typography variant="h6">Abebe Bikila</Typography>
+                                    <Typography variant="body2" sx={{ color: '#A05E45' }}>Teacher • Master&apos;s Degree </Typography>
+                                    <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>Certified Math and Physics Tutor with a Master&apos;s degree. 5+ years experience. Specializing in SAT prep. Let&apos;s reach your goals together!</Typography>
+
+                                    <Box sx={{ background: alpha('#F0F0F0', 0.5), borderRadius: 5, width: '100%', mt: 10, py: 2, px: 2, textAlign: 'center' }}>
+                                        <Stack direction="row" justifyContent="space-between">
+                                            <Stack>
+                                                <Typography variant="caption">Worked</Typography>
+                                                <Typography variant="h5" sx={{ color: '#FF9D01' }}>587hr+</Typography>
+                                            </Stack>
+                                            <Stack>
+                                                <Typography variant="caption">Rate</Typography>
+                                                <Typography variant="h5" sx={{ color: '#FF9D01' }}>350/hr</Typography>
+                                            </Stack>
+                                            <Stack>
+                                                <Typography variant="caption">Certificates</Typography>
+                                                <Typography variant="h5" sx={{ color: '#FF9D01' }}>5</Typography>
+                                            </Stack>
                                         </Stack>
-                                        <Stack>
-                                            <Typography variant="caption">Rate</Typography>
-                                            <Typography variant="h5" sx={{ color: '#FF9D01' }}>350/hr</Typography>
-                                        </Stack>
-                                        <Stack>
-                                            <Typography variant="caption">Certificates</Typography>
-                                            <Typography variant="h5" sx={{ color: '#FF9D01' }}>5</Typography>
-                                        </Stack>
+                                    </Box>
+                                </Stack>
+                            </CardContent>
+                        </Card>
+                        <Card sx={{ borderRadius: 6, pb: 1, pt: 5 }} elevation={0}>
+                            <CardHeader title={<Stack spacing={2}>
+                                <Stack direction="row" justifyContent="space-between">
+                                    <Box>
+                                        <IconButton variant="contained">
+                                            <Icon icon="material-symbols:favorite" />
+                                        </IconButton>
+                                    </Box>
+                                    <Stack direction="row" spacing={1}>
+                                        <Typography variant="body2">({rating})</Typography>
+                                        <Rating name="read-only" value={rating} readOnly />
                                     </Stack>
-                                </Box>
-                            </Stack>
-                        </CardContent>
-                    </Card>
+                                </Stack>
+                                <Typography variant="h5">Hey, how was your tutor session Drop some Rating!</Typography>
+                            </Stack>} />
+                            <CardContent>
+                                <Typography variant="body2">Hey, how was your tutor session Drop some Rating!</Typography>
+                                <Stack sx={{ py: 5 }} alignItems="center" spacing={3}>
+                                    <Rating name="read-only" value={ratingValue}
+                                        onChange={(event, newValue) => {
+                                            setRatingValue(newValue);
+                                        }} size="large" />
+                                    <Button sx={{ textTransform: 'none', color: 'black' }} variant="outlined">Submit</Button>
+                                </Stack>
+
+                            </CardContent>
+                        </Card>
+                    </Stack>
+
                 </Grid>
                 <Grid item xs={12} sm={8}>
                     <Stack sx={{ mt: 4 }} spacing={2}>
