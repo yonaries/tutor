@@ -1,8 +1,10 @@
 'use client';
+import { initializeChapaCheckout } from '@/actions/chapa';
 import Nav from '@/components/Nav';
 import { Icon } from '@iconify/react'
 import { Box, Button, ButtonBase, Card, CardContent, Chip, Container, Stack, Typography, alpha, styled } from '@mui/material'
 import React from 'react'
+import { useRouter } from "next/navigation";
 
 export const SimonDarkButton = styled(ButtonBase)(({ theme }) => ({
     color: "black",
@@ -53,46 +55,80 @@ function Page() {
 }
 
 function PricingCard({ title, price }) {
+    const router = useRouter();
+
+    const handlePlanSubscribe = async () => {
+        try {
+            console.log("subscribing to plan");
+            const response = await initializeChapaCheckout({
+                amount: 1000,
+                email: "john@gmail.com",
+                first_name: "John",
+                last_name: "Doe",
+                phone_number: "0712345678",
+            });
+            router.push(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
-        <>
-            <Stack spacing={2}>
-                <Stack sx={{}}>
-                    <Stack direction="row" alignItems="center">
-                        <Typography variant="h4">{price}</Typography>
-                        <Typography variant="subtitle1" color="text.secondary">/month</Typography>
-                    </Stack>
-                    <Box sx={{ height: 10 }} />
-                    <Typography variant="h5">{title}</Typography>
-                    <Typography variant="subtitle1" color="text.secondary">For most businesses that want to otpimize web queries</Typography>
-                </Stack>
-
-                <Stack>
-                    <Stack direction="row" alignItems="center" spacing={1}>
-                        <Icon icon="solar:check-circle-bold-duotone" color='#ADD8E6' />
-                        <Typography variant="body1" color="text.secondary" >All limited links</Typography>
-                    </Stack>
-
-                    <Stack direction="row" alignItems="center" spacing={1}>
-                        <Icon icon="solar:check-circle-bold-duotone" color='#ADD8E6' />
-                        <Typography variant="body1" color="text.secondary">Own analytics platform</Typography>
-                    </Stack>
-                    <Stack direction="row" alignItems="center" spacing={1}>
-                        <Icon icon="solar:check-circle-bold-duotone" color='#ADD8E6' />
-                        <Typography variant="body1" color="text.secondary">Chat support</Typography>
-                    </Stack>
-                    <Stack direction="row" alignItems="center" spacing={1}>
-                        <Icon icon="solar:check-circle-bold-duotone" color='#ADD8E6' />
-                        <Typography variant="body1" color="text.secondary">Optimize hashtags</Typography>
-                    </Stack>
-                    <Stack direction="row" alignItems="center" spacing={1}>
-                        <Icon icon="solar:check-circle-bold-duotone" color='#ADD8E6' />
-                        <Typography variant="body1" color="text.secondary">Unlimited users</Typography>
-                    </Stack>
-                </Stack>
-                <SimonDarkButton variant='contained'>Choose plan</SimonDarkButton>
+      <>
+        <Stack spacing={2}>
+          <Stack sx={{}}>
+            <Stack direction="row" alignItems="center">
+              <Typography variant="h4">{price}</Typography>
+              <Typography variant="subtitle1" color="text.secondary">
+                /month
+              </Typography>
             </Stack>
-        </>
-    )
+            <Box sx={{ height: 10 }} />
+            <Typography variant="h5">{title}</Typography>
+            <Typography variant="subtitle1" color="text.secondary">
+              For most businesses that want to otpimize web queries
+            </Typography>
+          </Stack>
+
+          <Stack>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Icon icon="solar:check-circle-bold-duotone" color="#ADD8E6" />
+              <Typography variant="body1" color="text.secondary">
+                All limited links
+              </Typography>
+            </Stack>
+
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Icon icon="solar:check-circle-bold-duotone" color="#ADD8E6" />
+              <Typography variant="body1" color="text.secondary">
+                Own analytics platform
+              </Typography>
+            </Stack>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Icon icon="solar:check-circle-bold-duotone" color="#ADD8E6" />
+              <Typography variant="body1" color="text.secondary">
+                Chat support
+              </Typography>
+            </Stack>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Icon icon="solar:check-circle-bold-duotone" color="#ADD8E6" />
+              <Typography variant="body1" color="text.secondary">
+                Optimize hashtags
+              </Typography>
+            </Stack>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Icon icon="solar:check-circle-bold-duotone" color="#ADD8E6" />
+              <Typography variant="body1" color="text.secondary">
+                Unlimited users
+              </Typography>
+            </Stack>
+          </Stack>
+          <SimonDarkButton onClick={(e)=>handlePlanSubscribe()} variant="contained">
+            Choose plan
+          </SimonDarkButton>
+        </Stack>
+      </>
+    );
 }
 function PricingCardMain({ title, price }) {
     return (

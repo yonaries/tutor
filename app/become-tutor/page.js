@@ -46,7 +46,26 @@ function Login() {
     const [register, setRegister] = useState('');
     // crate states for  name, profession, higher education and location
     const handleSubmit = () => {
-        alert(`Submit ${name} ${profession}`)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await signup({
+        first_name,
+        last_name,
+        email,
+        password,
+        university,
+        phone_number,
+        acadamic_year,
+        password_question,
+        password_answer,
+        picture,
+      });
+      router.push("/login");
+    } catch (error) {
+      console.error(error);
+    }
+  };
     }
     return (
         <>

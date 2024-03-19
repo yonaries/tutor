@@ -9,7 +9,6 @@ function Page() {
   return (
     <Stack>
       <Nav />
-
       <Box>
         <Box width="100%" height="100%">
           <Image src="/Landing.png" alt="landing"
