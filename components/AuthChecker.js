@@ -1,17 +1,26 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 function AuthChecker({}) {
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (!user | (user === "undefined")) {
-      router.push("/login");
+      if (
+        pathname !== "/login" &&
+        pathname !== "/signup" &&
+        pathname !== "/become-tutor" &&
+        pathname !== "/reset-password" &&
+        pathname !== "/pricing"
+      ) {
+        router.push("https://peerconnect-pearl.vercel.app/");
+      }
     } else {
-      router.push("/find");
+      if ((pathname === "/") | (pathname === "/login")) router.push("/find");
     }
   }, []);
 

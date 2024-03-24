@@ -7,11 +7,13 @@ import {
   TextField,
   Typography,
   styled,
+  Switch,
 } from "@mui/material";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { signin } from "@/actions/signin";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const SimonButton = styled(Button)(({ theme }) => ({
   boxShadow: "none",
@@ -33,19 +35,21 @@ const SimonText = styled(TextField)(({ theme }) => ({
 }));
 function Login() {
   const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const router = useRouter();
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("Student");
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-    await signin({
-      email,
-      password,
-    });
-    router.push("/find");
+      await signin({
+        email,
+        password,
+        role,
+      });
+      router.push("/find");
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
   };
 
@@ -67,7 +71,18 @@ function Login() {
           sx={{ width: 400 }}
         >
           <Box sx={{ pb: 5 }}>
-            <Image src="/Home.png" alt="Home Image" width={194} height={118} />
+            <Typography style={{
+              fontWeight: "bold",
+            }} variant="h3">
+              Peer
+              <span
+                style={{
+                  color: "#FF9D01",
+                }}
+              >
+                Connect
+              </span>
+            </Typography>
           </Box>
           <Typography variant="h5">Sign In</Typography>
           <SimonText
@@ -88,13 +103,25 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <Stack direction="row" sx={{ width: "100%" }} alignItems="center">
+            <Typography>I'm a Tutor</Typography>
+            <Switch
+              checked={role === "Tutor"}
+              onChange={(e) => setRole(e.target.checked ? "Tutor" : "Student")}
+            />
+          </Stack>
+          <Stack direction="row" sx={{ width: "100%" }} alignItems="center">
+            <Link href="/reset-password" passHref>
+              Forgot Password?
+            </Link>
+          </Stack>
           <SimonButton
             type="submit"
             variant="contained"
             fullWidth
             onClick={handleSubmit}
           >
-            Sign In
+            Sign In as {role}
           </SimonButton>
         </Stack>
       </Container>
