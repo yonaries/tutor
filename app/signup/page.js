@@ -69,10 +69,6 @@ function Login() {
     }
   };
 
-  const handleSignInWithGoogle = () => {
-    alert(`With google`);
-  };
-
   const handleFilechange = (e) => {
     setPicture(e.target.files[0]);
   };
@@ -178,6 +174,7 @@ function Login() {
             value={acadamic_year}
             onChange={(e) => setAcadamicYear(e.target.value)}
             required
+            type="number"
           />
           <Button
             component="label"
